@@ -2,6 +2,7 @@ plugins {
   id("java")
   id("org.jetbrains.kotlin.jvm") version "1.8.21"
   id("org.jetbrains.intellij") version "1.13.3"
+  id("org.openjfx.javafxplugin") version "0.0.13"
 }
 
 group = "com.example"
@@ -9,6 +10,26 @@ version = "1.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
+}
+javafx {
+  version = "17.0.2"
+  modules = listOf("javafx.controls",
+          "javafx.fxml",
+          "javafx.web",
+          "javafx.graphics",
+          "javafx.media",
+          "javafx.swing")
+}
+dependencies {
+  // JavaFX 模块依赖
+//  implementation("org.openjfx:javafx-base:17.0.2")
+//  implementation("org.openjfx:javafx-controls:17.0.2")
+//  implementation("org.openjfx:javafx-web:17.0.2")
+//  implementation("org.openjfx:javafx-media:17.0.2")
+//  implementation("org.openjfx:javafx-swing:17.0.2")
+//  implementation("org.openjfx:javafx-fxml:17.0.2")
+//  implementation("org.openjfx:javafx-graphics:17.0.2")
+
 }
 
 // Configure Gradle IntelliJ Plugin

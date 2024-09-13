@@ -1,16 +1,15 @@
 package com.example.simpleplugin.toolWindow;
 
-import com.example.simpleplugin.service.MyProjectService;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
-import com.intellij.ui.components.JBLabel;
-import com.intellij.ui.components.JBPanel;
-import com.intellij.ui.content.Content;
-import com.intellij.util.ui.components.JBComponent;
+import javafx.concurrent.Worker;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.scene.web.WebView;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.net.URL;
 
 public class MyToolWindow {
 
@@ -21,14 +20,22 @@ public class MyToolWindow {
     }
 
     public JComponent getContent(Project project) {
-        JBPanel panel = new JBPanel();
-        JBLabel label = new JBLabel("randomLabel");
-        panel.add(label);
-        JButton button = new JButton("shuffle");
-        panel.add(button);
-        final MyProjectService service = project.getService(MyProjectService.class);
-        button.addActionListener(e -> label.setText(service.getRandomNumber() + ""));
-        return panel;
+        JFXPanel jfxPanel = new JFXPanel();
+        WebView webView = new WebView();
+        URL url = this.getClass().getResource("/webview/chatbox.html");
+        webView.getEngine().load(url.toExternalForm());
+
+        // 设置命名空间并暴露对象开发页面
+        webView.getEngine().setUserAgent("app");
+        webView.getEngine().getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue == Worker.State.SUCCEEDED) {
+                webView.getEngine().executeScript("var app = { javaMethodToBeCalled: java.lang.invoke.MethodHandles.lookup().unreflect(com.example.simpleplugin.toolWindow.Test.javaMethodToBeCalled) }");
+            }
+        });
+
+        Scene scene = new Scene(webView, Color.TRANSPARENT);
+        jfxPanel.setScene(scene);
+        return jfxPanel;
     }
 
 }
