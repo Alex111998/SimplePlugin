@@ -1,0 +1,27 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.example.SimplePlugin</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>SimplePlugin</name>
+    <vendor>SimplePlugin</vendor>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <!--    <resource-bundle>messages.MyBundle</resource-bundle>-->
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow factoryClass="com.example.simpleplugin.toolWindow.MyToolWindowFactory"
+                    id="SimplePlugin" anchor="right"/>
+        <projectService serviceImplementation="com.example.simpleplugin.service.MyProjectService"
+                        serviceInterface="com.example.simpleplugin.service.MyProjectService"/>
+    </extensions>
+
+
+    <applicationListeners>
+        <listener class="com.example.simpleplugin.listeners.MyApplicationActivationListener"
+                  topic="com.intellij.openapi.application.ApplicationActivationListener"/>
+    </applicationListeners>
+</idea-plugin>
