@@ -21,7 +21,7 @@
 
 
     <applicationListeners>
-        <listener class="com.example.simpleplugin.listeners.MyApplicationActivationListener"
-                  topic="com.intellij.openapi.application.ApplicationActivationListener"/>
+        <listener class="com.example.simpleplugin.listeners.ThemeChangedListener"
+                  topic="com.intellij.openapi.editor.colors.EditorColorsListener"/>
     </applicationListeners>
 </idea-plugin>

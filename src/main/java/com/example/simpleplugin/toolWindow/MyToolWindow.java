@@ -2,6 +2,7 @@ package com.example.simpleplugin.toolWindow;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.util.ui.UIUtil;
 import javafx.application.Platform;
 import javafx.concurrent.Worker;
 import javafx.embed.swing.JFXPanel;
@@ -12,8 +13,9 @@ import javafx.scene.web.WebView;
 import javax.swing.*;
 import java.net.URL;
 
-public class MyToolWindow {
+import static com.example.simpleplugin.constants.Constant.WEBVIEW_KEY;
 
+public class MyToolWindow {
     private Project project;
 
     public MyToolWindow(Project project, ToolWindow toolWindow) {
@@ -28,16 +30,16 @@ public class MyToolWindow {
             webView.getEngine().load(url.toExternalForm());
 
             // 设置命名空间并暴露对象开发页面
-            webView.getEngine().setUserAgent("app");
             webView.getEngine().getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
                 Platform.runLater(() -> {
                     if (newValue == Worker.State.SUCCEEDED) {
-                        webView.getEngine().executeScript("var app = { javaMethodToBeCalled: java.lang.invoke.MethodHandles.lookup().unreflect(com.example.simpleplugin.toolWindow.Test.javaMethodToBeCalled) }");
+                        boolean isDark = UIUtil.isUnderDarcula();
+                        webView.getEngine().executeScript("changeTheme(" + isDark + ")");
                     }
                 });
 
             });
-
+            project.putUserData(WEBVIEW_KEY, webView);
             Scene scene = new Scene(webView, Color.TRANSPARENT);
             jfxPanel.setScene(scene);
         });
