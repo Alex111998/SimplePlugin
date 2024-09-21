@@ -19,6 +19,7 @@
             <button onclick="createQuestion()">提问</button>
             <button onclick="createAnswer()">回复</button>
             <button onclick="openBaidu();">打开百度</button>
+            <button onclick="request();">请求后端</button>
         </div>
     </div>
 
@@ -26,6 +27,14 @@
         function openBaidu() {
             try {
                 window.call.open();
+            } catch (e) {
+                createQuestion(e);
+            }
+        }
+
+        function request() {
+            try {
+                window.call.request();
             } catch (e) {
                 createQuestion(e);
             }

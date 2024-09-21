@@ -20,7 +20,12 @@ function createQuestion(question) {
     chatBox.appendChild(userMessageDiv);
 }
 
-function createAnswer() {
+function createAnswer(answer) {
+    if (answer) {
+        answer = atob(answer);
+    } else {
+        answer = codeContent;
+    }
     // 模拟回复 Java 代码，逐个字符输出
     const botMessageDiv = document.createElement('div');
     botMessageDiv.classList.add('message', 'bot-message');
@@ -38,7 +43,7 @@ function createAnswer() {
         codeDiv.appendChild(codeBlock);
         botMessageDiv.appendChild(codeDiv);
 
-        appendContent(code, codeContent, true, () => {
+        appendContent(code, answer, true, () => {
             // 添加复制按钮
             const copyButton = document.createElement('button');
             copyButton.classList.add('copy-button');
@@ -70,6 +75,20 @@ function appendContent(element, content, realtime, func) {
             }
         }
     }, 10);
+//    append(0, element, content);
+//    if (func) {
+//        func();
+//    }
+}
+
+function append(index, element, content){
+    if (index < content.length) {
+        element.textContent += content[index];
+        hljs.highlightAll();
+        // 自动滚动到最后一行
+        chatBox.scrollTop = chatBox.scrollHeight;
+        setTimeout("append("+ (++index) + ",'" + element + "','" + content +"')", 1000)
+    }
 }
 
 let codeContent = `public class Man {
