@@ -10,10 +10,13 @@ function changeTheme(isDark) {
     }
 }
 
-function createQuestion() {
+function createQuestion(question) {
+    if (!question) {
+        question = '來一段java代码';
+    }
     const userMessageDiv = document.createElement('div');
     userMessageDiv.classList.add('message', 'user-message');
-    userMessageDiv.textContent = '你：來一段java代碼';
+    userMessageDiv.textContent = question;
     chatBox.appendChild(userMessageDiv);
 }
 

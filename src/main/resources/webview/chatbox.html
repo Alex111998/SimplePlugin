@@ -16,12 +16,21 @@
     <div class="container">
         <div class="chat-box"></div>
         <div class="input-box">
-            <button onclick="createQuestion()">問題</button>
-            <button onclick="createAnswer()">回復</button>
+            <button onclick="createQuestion()">提问</button>
+            <button onclick="createAnswer()">回复</button>
+            <button onclick="openBaidu();">打开百度</button>
         </div>
     </div>
 
     <script>
+        function openBaidu() {
+            try {
+                window.call.open();
+            } catch (e) {
+                createQuestion(e);
+            }
+        }
+
         document.addEventListener('click', function (event) {
             if (event.target.classList.contains('copy-button')) {
                 const codeBlock = event.target.parentNode;

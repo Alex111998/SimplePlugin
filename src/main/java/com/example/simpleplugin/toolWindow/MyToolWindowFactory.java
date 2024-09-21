@@ -13,14 +13,6 @@ public class MyToolWindowFactory implements ToolWindowFactory {
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         MyToolWindow myToolWindow = new MyToolWindow(project, toolWindow);
         Content content = ContentFactory.SERVICE.getInstance().createContent(myToolWindow.getContent(project), null, false);
-//        val content = ContentFactory.getInstance().createContent(myToolWindow.getContent(), null, false)
-//        val jxpanel = JXPanel();
-//        val webView = WebView();
         toolWindow.getContentManager().addContent(content);
     }
-
-//    @Override
-//    public void init(@NotNull ToolWindow toolWindow) {
-//        ToolWindowFactory.super.init(toolWindow);
-//    }
 }
