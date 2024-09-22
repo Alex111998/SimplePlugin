@@ -101,3 +101,42 @@ let codeContent = `public class Man {
         System.out.println(String.format("Name: %s", NAME));
     }
 }`;
+
+let socket;
+function connectWebSocket(port) {
+    socket = new WebSocket("ws://localhost:" + port + "/socket");
+    // 当连接建立时
+    socket.onopen = event => {
+        console.log("WebSocket connection established.");
+        createQuestion("WebSocket connection established. Port is " + port);
+    }
+
+    // 当收到消息时
+    socket.onmessage = event => {
+        console.log("Message from server ", event.data);
+    }
+
+    // 当连接关闭时
+    socket.onclose = event => {
+        console.log("WebSocket connection closed: " + event.code + " " + event.reason);
+    }
+
+    // 当发生错误时
+    socket.onerror = error => {
+        console.error("WebSocket error: " + error);
+    }
+}
+
+// 发送消息
+function sendMessage(message) {
+    if (message) {
+        socket.send(message);
+    }
+}
+
+function close() {
+    // 关闭 WebSocket 连接
+    socket.close();
+    // 关闭 WebSocket 连接并指定状态码和原因
+    socket.close(1000, "Connection closed by user");
+}

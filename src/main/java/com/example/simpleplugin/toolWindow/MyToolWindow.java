@@ -1,6 +1,7 @@
 package com.example.simpleplugin.toolWindow;
 
 import com.example.simpleplugin.service.CallService;
+import com.example.simpleplugin.websocket.WebSocketServerManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.util.ui.UIUtil;
@@ -32,12 +33,15 @@ public class MyToolWindow {
             URL url = this.getClass().getResource("/webview/chatbox.html");
             webView.getEngine().load(url.toExternalForm());
             webView.getEngine().setJavaScriptEnabled(true);
+            WebSocketServerManager webSocket = WebSocketServerManager.getInstance();
             // 设置命名空间并暴露对象开发页面
             webView.getEngine().getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
                 Platform.runLater(() -> {
                     if (newValue == Worker.State.SUCCEEDED) {
                         boolean isDark = UIUtil.isUnderDarcula();
                         webView.getEngine().executeScript("changeTheme(" + isDark + ")");
+
+                        webView.getEngine().executeScript("connectWebSocket(" + webSocket.getPort() + ")");
 
                         // 使用定时任务将CallService放进window，不然会失效
                         java.util.Timer timer = new java.util.Timer();

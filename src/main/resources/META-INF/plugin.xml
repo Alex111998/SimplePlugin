@@ -17,6 +17,9 @@
                     id="SimplePlugin" anchor="right"/>
         <projectService serviceImplementation="com.example.simpleplugin.service.MyProjectService"
                         serviceInterface="com.example.simpleplugin.service.MyProjectService"/>
+
+        <projectService serviceImplementation="com.example.simpleplugin.websocket.WebSocketServerManager"
+                        serviceInterface="com.example.simpleplugin.websocket.WebSocketServerManager"/>
     </extensions>
 
 

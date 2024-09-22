@@ -12,6 +12,7 @@ repositories {
   mavenCentral()
 }
 javafx {
+//  version = "17.0.2"
   version = "11.0.2"
   modules = listOf("javafx.controls",
           "javafx.fxml",
@@ -29,7 +30,7 @@ dependencies {
 //  implementation("org.openjfx:javafx-swing:17.0.2")
 //  implementation("org.openjfx:javafx-fxml:17.0.2")
 //  implementation("org.openjfx:javafx-graphics:17.0.2")
-
+    implementation("org.java-websocket:Java-WebSocket:1.5.7")
 }
 
 // Configure Gradle IntelliJ Plugin
